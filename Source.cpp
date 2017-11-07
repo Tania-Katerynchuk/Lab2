@@ -2,7 +2,7 @@
 #include "Interface.h"
 #include <iostream>
 #include <stdio.h>
-#include <conio.h>
+
 #include <string>
 #include <vector>
 
@@ -10,6 +10,7 @@ using namespace std;
 
 bool OpenFile(vector<char>& line);
 void ParseLine(vector<char> line, vector<char>& lineLeft, vector<char>& lineRight, char symbol);
+//відкриття файла
 bool OpenFile(vector<char>& line) {
 	char fileName[61] = "1.txt";
 	//cout << "Enter fole name: ";
@@ -28,7 +29,7 @@ bool OpenFile(vector<char>& line) {
 	fclose(fRead);
 	return true;
 }
-
+//розбиття стрічки на дві частини
 void ParseLine(vector<char> line, vector<char>& lineLeft, vector<char>& lineRight, char symbol) {
 	for (int i = 0; i < line.size(); i++) {
 		if (line[i] == symbol) {
@@ -43,7 +44,7 @@ void ParseLine(vector<char> line, vector<char>& lineLeft, vector<char>& lineRigh
 		}
 	}
 }
-
+//запис стрічки в файл
 void WriteLeftLine(vector<char> line, char fileName[61]) {
 	FILE * fWrite;
 	if ((fWrite = fopen(fileName, "w")) == NULL) {
@@ -63,19 +64,15 @@ int main() {
 	vector<char> line;
 	//Відкриваємо файл
 	if (OpenFile(line)) {
-		OutputLine(line);
+		OutputLine(line);//вивід даних з файла
 		vector<char> lineLeft;
 		vector<char> lineRight;
 		char symbol = 'c';
-		ParseLine(line, lineLeft, lineRight, symbol);
-		OutputLeftRightLine(lineLeft, lineRight, symbol);
-		WriteLeftLine(lineLeft, "LeftLine.txt");
-		WriteLeftLine(lineRight, "RightLine.txt");
+		ParseLine(line, lineLeft, lineRight, symbol);//розбиття стрічки на дві частини до першого входження символа і після
+		OutputLeftRightLine(lineLeft, lineRight, symbol);//вивід двох утворених стрічок
+		WriteLeftLine(lineLeft, "LeftLine.txt");//запис стрічки до входження символу в файд
+		WriteLeftLine(lineRight, "RightLine.txt");//запис стрічки після входження символу в файл
 	}
-
-
-
-
-	_getch();
+	system("pause");
 	return 0;
 }
